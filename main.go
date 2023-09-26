@@ -131,12 +131,16 @@ func (d *Driver) ReadAll(collection string)([]string, error){
 		if err != nil{
 			return nil, err
 		}
+		records = append(records, string(b))
 	}
+	return records, nil
 
 }
 
-func (d *Driver) Delete() error{
-
+func (d *Driver) Delete(collection, resource string) error{
+	path := filepath.Join(collection, resource)
+	mutex := d.getOrCreateMutex(collection)
+	mutex.Lock()
 }
 
 func (d *Driver) getOrCreateMutex(collection string) *sync.Mutex{
