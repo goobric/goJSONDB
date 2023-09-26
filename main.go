@@ -5,6 +5,8 @@ import (
 	"fmt"
 )
 
+const Version = "1.0.1"
+
 // Golang has own data structure called struct
 // Golang does not natively understand json data structure
 // string, .Number are primitive data types
@@ -56,4 +58,28 @@ func main() {
 			Address: value.Address,
 		})
 	}
+
+	records, err := db.ReadAll("users")
+	if err != nil {
+		fmt.Println("Error user", err)
+	}
+	fmt.Println(records)
+
+	allusers := []User{}
+
+	for _, record := range records {
+		empolyeeFound := User{}
+		if err := json.Unmarsh([]byte(record), &empolyeeFound); err != nil {
+			fmt.Println("Error employee", err)
+		}
+		allusers = append(allusers, empolyeeFound)
+	}
+	fmt.Println((allusers))
+
+	// if err := db.Delete("users", "john"); err != nil {
+	// 	fmt.Println("Error", err)
+	// }
+	// if err := db.Delete("user", ""); err != nil {
+	// 	fmt.Println("Error", err)
+	// }
 }
