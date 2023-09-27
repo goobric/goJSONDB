@@ -55,11 +55,11 @@ func New(dir string, options *Options)(*Driver, error){
 	}
 
 	if _, err := os.Stat(dir); err == nil {
-		opts.Logger.Debug("Using '%s' (db already exists)\n", dir)
+		opts.Logger.Debud("Using '%s' (db already exists)\n", dir)
 		return &driver, nil
 	}
 
-	opts.Logger.Debug("Creating the db at '%s'... ", dir)
+	opts.Logger.Debud("Creating the db at '%s'... ", dir)
 	return &driver, os.MkdirAll(dir, 0755)
 }
 //struct methods
@@ -238,16 +238,16 @@ func main() {
 
 	allusers := []User{}
 
-	for _, record := range records {
+	for _, rec := range records {
 		empolyeeFound := User{}
-		if err := json.Unmarsh([]byte(record), &empolyeeFound); err != nil {
+		if err := json.Unmarshal([]byte(rec), &empolyeeFound); err != nil {
 			fmt.Println("Error employee", err)
 		}
 		allusers = append(allusers, empolyeeFound)
 	}
 	fmt.Println((allusers))
 
-	// if err := db.Delete("users", "john"); err != nil {
+	// if err := db.Delete("users", "John"); err != nil {
 	// 	fmt.Println("Error", err)
 	// }
 	// if err := db.Delete("user", ""); err != nil {
